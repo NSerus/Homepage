@@ -1,5 +1,6 @@
 import "./css/Weather.css";
 import Search from "./Search";
+import CurrentWeather from "./CurrentWeather";
 import React from "react";
 
 function Weather() {
@@ -11,6 +12,9 @@ function Weather() {
     <div>
       <div className="container">
       <Search onSearchChange={handleOnSearchChange}/>
+      
+      <CurrentWeather/>
+      
       </div>
     </div>
   );
