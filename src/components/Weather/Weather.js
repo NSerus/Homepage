@@ -1,6 +1,7 @@
 import "./css/Weather.css";
 import Search from "./Search";
 import CurrentWeather from "./CurrentWeather";
+import Forecast from "./Forecast";
 import React, { useState } from "react";
 import { WEATHER_API_KEY, WEATHER_API_URL } from "./api";
 
@@ -31,17 +32,14 @@ function Weather() {
       .catch((err) => console.log(err));
   }
 
-  console.log("cur Weather", currentWeather);
-  console.log("forecast", forecast);
-
   return (
     <div>
       <div className="container">
         <Search onSearchChange={handleOnSearchChange} />
         {currentWeather && <CurrentWeather data={currentWeather} />}
         {/* ! '{}' these are for if no data component doesnt open */}
+        {forecast && <Forecast data={forecast} />}
       </div>
-      
     </div>
   );
 }
