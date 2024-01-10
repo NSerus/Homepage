@@ -9,7 +9,7 @@ function Weather({ searchData }) {
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [openForecast, setOpenForecast] = useState(false);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,12 +41,11 @@ function Weather({ searchData }) {
   }, [searchData]);
   function handleCurWeatherClick() {
     setOpenForecast((prev) => !prev);
-    console.log("forecast".forecast, "open");
+  console.log("forecast", openForecast ? "closed" : "open");
   }
   return (
     <div>
       <div className="container">
-        {/* <Search onSearchChange={handleOnSearchChange} /> */}
         {currentWeather && (
           <CurrentWeather
             data={currentWeather}

@@ -10,7 +10,6 @@ function App() {
 
   const [data,setData] = useState('');
  function handleOnSettingsChange(searchData) {
-  console.log(searchData)
   setData(searchData)
  }
   return (

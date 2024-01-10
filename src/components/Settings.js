@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./css/Settings.css";
 import Search from "./Weather/Search";
 
@@ -24,14 +24,44 @@ function Settings({onSettingsChange}) {
     setIsMenuClicked(!isMenuClicked);
   }
 
-  // maintains settings open and closed */
-  function handleSettingsClick() {
-    setOpenSettings((prev) => !prev);
-  }
-/* maintains settings open if clicked search */
-  function handleSearchClick(e) {
-    e.stopPropagation(); // Stop the click event from reaching the parent div
-  }
+ // Closes settings if clicked outside the menu or enter
+ useEffect(() => {
+  const handleBodyClick = (e) => {
+    if (openSettings && !e.target.closest(".menu") && !e.target.closest(".burger_menu")) {
+      setOpenSettings(false);
+      setIsMenuClicked(false);
+      setBurgerClass("burger_bar unclicked");
+    }
+  };
+
+  const handleKeyDown = (e) => { //! Closes if pressed enter
+    if (openSettings && e.key === "Enter") {
+      setOpenSettings(false);
+      setIsMenuClicked(false);
+      setBurgerClass("burger_bar unclicked");
+    }
+  };
+
+  document.body.addEventListener("click", handleBodyClick);
+  document.body.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    document.body.removeEventListener("click", handleBodyClick);
+    document.body.removeEventListener("keydown", handleKeyDown);
+  };
+}, [openSettings]);
+
+// Toggles settings open and closed
+function handleSettingsClick(e) {
+  setOpenSettings((prev) => !prev);
+  e.stopPropagation(); // Stop the click event from reaching the parent div
+  updateMenu(e);
+}
+
+// Prevents settings from closing when clicking inside the menu
+function handleSearchClick(e) {
+  e.stopPropagation(); // Stop the click event from reaching the parent div
+}
 
   return (
     <div className="settings">

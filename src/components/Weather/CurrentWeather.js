@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./css/CurrentWeather.css";
 
-function CurrentWeather({ data }) {
+function CurrentWeather({ data, onClick }) {
   //! ALWAYS FIRST LETTER CAPS
-console.log(data)
   function convertUnixToReadable(unixTimestamp) {
     const sunsetTimeUTC = new Date(unixTimestamp * 1000);
     const sunsetTimeLisbon = sunsetTimeUTC.toLocaleString('en-US', {
@@ -18,7 +17,7 @@ console.log(data)
   const readableSunsetTime = convertUnixToReadable(data.sys.sunset);
 
   return (
-    <div className="weather">
+    <div className="weather" onClick={onClick}>
       <div className="top">
         <div>
           <p className="city"> {data.city}</p>
