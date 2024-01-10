@@ -37,7 +37,8 @@ function Search({ onSearchChange }) {
       return { options: [], hasMore: false };
     }
   }
-
+ 
+ 
   return (
     <AsyncPaginate
       className="search"
@@ -49,7 +50,7 @@ function Search({ onSearchChange }) {
       components={{
         DropdownIndicator: () => null,
         IndicatorSeparator: () => null,
-      }} /* Removes arrow for dropdown */
+      }}
     />
   );
 }

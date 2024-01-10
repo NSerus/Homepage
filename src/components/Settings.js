@@ -12,6 +12,10 @@ function Settings({onSettingsChange}) {
   function handleOnSearchChange(searchData) {
     //handles City data in this upper component and sends to App
     onSettingsChange(searchData); 
+
+    setOpenSettings(false);
+    setIsMenuClicked(false);
+    setBurgerClass("burger_bar unclicked");
   }
 
   //? Updates Menus icon
@@ -27,27 +31,18 @@ function Settings({onSettingsChange}) {
  // Closes settings if clicked outside the menu or enter
  useEffect(() => {
   const handleBodyClick = (e) => {
-    if (openSettings && !e.target.closest(".menu") && !e.target.closest(".burger_menu")) {
+    if (openSettings && !e.target.closest(".menu") && !e.target.closest(".burger_menu") && e.target.closest(".burger_menu")) {
       setOpenSettings(false);
       setIsMenuClicked(false);
       setBurgerClass("burger_bar unclicked");
     }
   };
 
-  const handleKeyDown = (e) => { //! Closes if pressed enter
-    if (openSettings && e.key === "Enter") {
-      setOpenSettings(false);
-      setIsMenuClicked(false);
-      setBurgerClass("burger_bar unclicked");
-    }
-  };
 
   document.body.addEventListener("click", handleBodyClick);
-  document.body.addEventListener("keydown", handleKeyDown);
 
   return () => {
     document.body.removeEventListener("click", handleBodyClick);
-    document.body.removeEventListener("keydown", handleKeyDown);
   };
 }, [openSettings]);
 

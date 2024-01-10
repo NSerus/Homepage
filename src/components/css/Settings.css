@@ -1,6 +1,6 @@
 .settings {
   position: fixed;
-  bottom: 0;
+  top: 0;
   right: 0;
   width: 170px; /* Adjust the width as needed */
   padding: 30px; /* Optional: Add padding to your component */
@@ -45,7 +45,7 @@
   display: flex;
   text-align: left;
   position: absolute;
-  top: -5.5rem;
+  top: 5.5rem;
   padding: 15px;
   border-radius: 8px;
   background-color: gray;
@@ -55,12 +55,12 @@
 .menu::before {
   content: "";
   position: absolute;
-  top: 3.3rem;
+  top: -1rem;
   right: 1rem;
   padding: 15px;
   transform: rotate(45deg);
   background-color: gray;
 
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
 }
