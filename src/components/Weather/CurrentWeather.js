@@ -3,7 +3,7 @@ import "./css/CurrentWeather.css";
 
 function CurrentWeather({ data }) {
   //! ALWAYS FIRST LETTER CAPS
-
+console.log(data)
   function convertUnixToReadable(unixTimestamp) {
     const sunsetTimeUTC = new Date(unixTimestamp * 1000);
     const sunsetTimeLisbon = sunsetTimeUTC.toLocaleString('en-US', {

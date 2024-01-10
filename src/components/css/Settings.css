@@ -1,0 +1,66 @@
+.settings {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 170px; /* Adjust the width as needed */
+  padding: 30px; /* Optional: Add padding to your component */
+  color: white;
+  text-align: right;
+}
+.burger_menu {
+  height: 30px;
+  width: 30px;
+  margin-left: 64%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.burger_bar {
+  width: 2em;
+  height: 0.25em;
+  background-color: rgb(190, 190, 190);
+  border-radius: 0.5em;
+  border: 1px solid black;
+  transition: ease-out 0.5s;
+}
+/* CLICKED */
+.burger_bar.clicked:nth-child(1) {
+  transform: rotate(45deg) translate(0.375em, 0.625em);
+}
+.burger_bar.clicked:nth-child(2) {
+  transform: scale(0.1);
+}
+.burger_bar.clicked:nth-child(3) {
+  transform: rotate(135deg) translate(-0.45em, 0.65em);
+}
+/* UNCLICKED */
+.burger_bar.unclicked {
+  transform: rotate(0) translate(0);
+  transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+}
+.menu {
+  list-style: none;
+  display: flex;
+  text-align: left;
+  position: absolute;
+  top: -5.5rem;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: gray;
+  border: 1px solid black;
+}
+
+.menu::before {
+  content: "";
+  position: absolute;
+  top: 3.3rem;
+  right: 1rem;
+  padding: 15px;
+  transform: rotate(45deg);
+  background-color: gray;
+
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}

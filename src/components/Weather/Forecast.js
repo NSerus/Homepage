@@ -29,7 +29,7 @@ function Forecast({ data }) {
     <>
       <Accordion allowZeroExpanded>
         {/* 'allowZeroExpanded' allows accordion to close */}
-        {data.list.splice(0, 7).map((item, idx) => (
+        {data.list.slice(0, 7).map((item, idx) => (
           <AccordionItem key={idx}>
             <AccordionItemHeading>
               <AccordionItemButton>
