@@ -27,15 +27,15 @@ function Clock() {
     const d = new Date();
     const h = d.getHours();
     const m = d.getMinutes();
-    const s = d.getSeconds();
 
     setTime(
-      formatTime(h) + h + ":" + formatTime(m) + m + ":" + formatTime(s) + s // sets the time in the right format
+      formatTime(h) + h + ":" + formatTime(m) + m  // sets the time in the right format
     ); // sets all the values to the constant to put on DOM
   }
 
   return (
     <div>
+      
       <div className="header">
         <div>{time}</div>
       </div>

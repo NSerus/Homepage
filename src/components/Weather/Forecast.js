@@ -24,6 +24,7 @@ function Forecast({ data }) {
     //slice extracts portion of this tomorrow till end of week
     WEEK_DAYS.slice(0, dayInAWeek) // concat adds the rest of the days until this day next week
   );
+  console.log(data)
 
   return (
     <>

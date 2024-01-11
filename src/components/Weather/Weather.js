@@ -1,5 +1,4 @@
 import "./css/Weather.css";
-import Search from "./Search";
 import CurrentWeather from "./CurrentWeather";
 import Forecast from "./Forecast";
 import React, { useState, useEffect } from "react";
@@ -14,19 +13,31 @@ function Weather({ searchData }) {
     const fetchData = async () => {
       try {
         if (searchData && searchData.value) {
+          // doesnt get data if no data to search
           const [lat, lon] = searchData.value.split(" ");
           const [currentWeatherResponse, forecastResponse] = await Promise.all([
-            fetch(`${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`),
-            fetch(`${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`),
+            fetch(
+              `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
+            ),
+            fetch(
+              `${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
+            ),
           ]);
-  
+
           const currentWeatherData = await currentWeatherResponse.json();
           const forecastData = await forecastResponse.json();
-  
+
           setCurrentWeather({
             city: searchData.label,
             ...currentWeatherData,
           });
+
+          forecastData.list.forEach((forecast) => {
+            const date = forecast.dt_txt.split(" ")[0];
+            console.log(date);
+            //! DO DATA MANIPULATION HERE
+          });
+
           setForecast({
             city: searchData.label,
             ...forecastData,
@@ -36,12 +47,17 @@ function Weather({ searchData }) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData();
+
+    // Fetch data every hour
+    const intervalId = setInterval(fetchData, 3600000);
+    return () => clearInterval(intervalId);
   }, [searchData]);
+
   function handleCurWeatherClick() {
     setOpenForecast((prev) => !prev);
-  console.log("forecast", openForecast ? "closed" : "open");
+    console.log("forecast", forecast);
   }
   return (
     <div>

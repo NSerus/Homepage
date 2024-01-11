@@ -37,8 +37,8 @@ function CurrentWeather({ data, onClick }) {
             <span className="parameter-value">{readableSunsetTime}</span>
           </div>
           <div className="parameter-row">
-            <span className="parameter-label">Feels Like</span>
-            <span className="parameter-value">{Math.round(data.main.feels_like*10)/10}</span>
+            <span className="parameter-label">Feel</span>
+            <span className="parameter-value">{Math.round(data.main.feels_like*10)/10}ºC</span>
           </div>
           <div className="parameter-row">
             <span className="parameter-label">Humidity</span>
