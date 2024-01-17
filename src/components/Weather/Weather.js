@@ -61,6 +61,7 @@ function Weather({ searchData }) {
     setOpenForecast((prev) => !prev);
     console.log("forecast", forecast);
   }
+
   return (
     <div>
       <div className="container">

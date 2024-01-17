@@ -1,6 +1,6 @@
 import "./App.css";
 import Clock from "./components/Clock";
-import Tasks from "./components/Tasks/Tasks";
+import Tasks from "./components/Tasks";
 import Weather from "./components/Weather/Weather";
 import Pomo from "./components/Pomo";
 import Settings from "./components/Settings";

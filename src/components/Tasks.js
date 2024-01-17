@@ -1,4 +1,4 @@
-import "./Tasks.css";
+import "./css/Tasks.css";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -17,6 +17,7 @@ function Tasks() {
     setInput("");
   }
 
+  //handling changes to specific tasks
   function handleComplete({ id }) {
     setTasks(
       tasks.map((item) => {
@@ -26,12 +27,9 @@ function Tasks() {
       })
     );
   }
-
   function handleDelete({ id }) {
     setTasks(tasks.filter((tasks) => tasks.id !== id));
   }
-
-
   function handleEdit(event,id) {
     setTasks((prevTasks) => {
       return prevTasks.map((task) => {
@@ -40,7 +38,6 @@ function Tasks() {
         return task;
       });
     });
-    console.log(tasks)
   }
 
   return (

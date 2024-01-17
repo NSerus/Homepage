@@ -11,7 +11,8 @@ function Search({ onSearchChange }) {
     onSearchChange(searchData); //Recieves data and sends to upper component
   }
 
-  async function loadOptions(inputValue) { // when clicked i will get the values i need
+  async function loadOptions(inputValue) {
+    // when clicked i will get the values i need
     try {
       const response = await fetch(
         `${GEO_API_URL}?minPopulation=100000&limit=10&namePrefix=${inputValue}`,
@@ -37,8 +38,7 @@ function Search({ onSearchChange }) {
       return { options: [], hasMore: false };
     }
   }
- 
- 
+
   return (
     <AsyncPaginate
       className="search"
