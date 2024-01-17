@@ -31,10 +31,12 @@ function Weather({ searchData }) {
             city: searchData.label,
             ...currentWeatherData,
           });
-
+          
+          // ! Move this to other class
           forecastData.list.forEach((forecast) => {
             const date = forecast.dt_txt.split(" ")[0];
             console.log(date);
+            console.log(forecast);
             //! DO DATA MANIPULATION HERE
           });
 
@@ -74,5 +76,7 @@ function Weather({ searchData }) {
     </div>
   );
 }
+
+
 
 export default Weather;
