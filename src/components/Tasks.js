@@ -25,7 +25,7 @@ function Tasks() {
   }, []);
 
   // IndexedDB functions
-  const openDB = async () => {
+  async function openDB() {
     const dbName = "tasksDatabase";
     const dbVersion = 1;
 
@@ -66,63 +66,85 @@ function Tasks() {
   };
 
   // Periodically update tasks in IndexedDB
-  useEffect(() => {
+  /*useEffect(() => {
     const intervalId = setInterval(() => {
       updateTasksInIndexedDB();
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [tasks]);
+  }, [tasks]);*/
 
-  const updateTasksInIndexedDB = async () => {
-    try {
-      const db = await openDB();
-      const transaction = db.transaction("tasks", "readwrite");
-      const store = transaction.objectStore("tasks");
+  async function updateTasksInIndexedDB(newTasks) {
+  try {
+    const db = await openDB();
+    const transaction = db.transaction("tasks", "readwrite");
+    const store = transaction.objectStore("tasks");
 
-      // Clear existing data and add updated tasks
+    // Clear existing data
+    const clearPromise = new Promise((resolve, reject) => {
       const clearRequest = store.clear();
-      clearRequest.onsuccess = () => {
-        tasks.forEach((task) => {
-          store.add(task);
-        });
-      };
-    } catch (error) {
-      console.error("Error updating tasks in IndexedDB:", error);
-    }
-  };
+      clearRequest.onsuccess = () => resolve();
+      clearRequest.onerror = () => reject(clearRequest.error);
+    });
+
+    // Wait for the clear operation to complete before adding new tasks
+    await clearPromise;
+
+    // Add updated tasks
+    await Promise.all(newTasks.map((task) => {
+      return new Promise((resolve, reject) => {
+        const addRequest = store.add(task);
+        addRequest.onsuccess = () => resolve();
+        addRequest.onerror = () => reject(addRequest.error);
+      });
+    }));
+
+    console.log('Added tasks to IndexedDB');
+  } catch (error) {
+    console.error("Error updating tasks in IndexedDB:", error);
+  }
+}
   function onInputChange(event) {
     setInput(event.target.value);
   }
 
-  function onFormSubmit(event) {
+  async function onFormSubmit(event) {
     event.preventDefault();
-    setTasks([...tasks, { id: uuidv4(), title: input, completed: false }]);
+    const newTask = { id: uuidv4(), title: input, completed: false };
+    setTasks([...tasks, newTask]); // doesnt update before updateTasksInIndexedDB
     setInput("");
+  
+    // Update tasks in IndexedDB
+    await updateTasksInIndexedDB([newTask,...tasks]);
   }
 
   //handling changes to specific tasks
-  function handleComplete({ id }) {
+  async function handleComplete({ id }) {
     setTasks(
       tasks.map((item) => {
         if (item.id === id)
           return { ...item /*  */, completed: !item.completed };
-        console.log("item", item);
         return item;
       })
     );
   }
-  function handleDelete({ id }) {
+  async function handleDelete({ id }) {
     setTasks(tasks.filter((tasks) => tasks.id !== id));
+    updateTasksInIndexedDB();
   }
-  function handleEdit(event, id) {
+  async function handleEdit(event, id) {
     setTasks((prevTasks) => {
       return prevTasks.map((task) => {
         if (task.id === id) return { ...task, title: event.target.value };
 
         return task;
       });
+      const intervalId = setInterval(() => {
+        updateTasksInIndexedDB();
+      }, 1000);
+      return () => clearInterval(intervalId);
     });
+
   }
 
   return (
