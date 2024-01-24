@@ -12,6 +12,8 @@ function App() {
  function handleOnSettingsChange(searchData) {
   setData(searchData)
  }
+
+
   return (
     <div>
       <Clock />
