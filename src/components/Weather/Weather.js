@@ -10,36 +10,28 @@ function Weather({ searchData }) {
   const [forecast, setForecast] = useState(null);
   const [openForecast, setOpenForecast] = useState(false);
 
-   /* const [searchValues, setSearchValues] = useState();
+  /* const [searchValues, setSearchValues] = useState();
   setSearchValues(searchData);  */
 
- // IndexedDB functions
-
- 
-  
+  // IndexedDB functions
 
   useEffect(() => {
 
-    const loadWeatherFromIndexedDB = async () => {
-      try {
-        const db = await IndexDBHandler.openDB();
-        const searchDataArr = await IndexDBHandler.getWeather(db, "weather");
-        searchData = searchDataArr[0];
-
-        console.log('searchData', searchData)
-      } catch (error) {
-        console.error("Error loading Weather from IndexedDB:", error);
-      }
-    };
-
     const fetchData = async () => {
       try {
-        console.log(searchData.value)
+        // Handling of DB loading
+        const db = await IndexDBHandler.openDB();
+        const searchDataArr = await IndexDBHandler.getWeather(db, "weather");
+        if (!searchDataArr || searchDataArr.length === 0)
+          console.log("No weather data found in IndexedDB");
+        else if(!searchData) searchData = searchDataArr[0];
+
+        //Handling of text
         if (searchData && searchData.value) {
-          IndexDBHandler.updateInIndexedDB(searchData, 'weather');
-          // doesnt get data if no data to search
+          IndexDBHandler.updateInIndexedDB(searchData, "weather");
+          // doesn't get data if no data to search
           const [lat, lon] = searchData.value.split(" ");
-          console.log(lat)
+          console.log(lat);
           const [currentWeatherResponse, forecastResponse] = await Promise.all([
             fetch(
               `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
@@ -73,7 +65,6 @@ function Weather({ searchData }) {
       }
     };
 
-    loadWeatherFromIndexedDB();
     fetchData();
 
     // Fetch data every hour
@@ -94,7 +85,7 @@ function Weather({ searchData }) {
             onClick={handleCurWeatherClick}
           />
         )}
-        {/* ! '{}' these are for if no data component doesnt open */}
+        {/* ! '{}' these are for if no data component doesn't open */}
         {forecast && openForecast && <Forecast data={forecast} />}
       </div>
     </div>

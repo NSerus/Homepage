@@ -6,7 +6,6 @@ import { IndexDBHandler } from "./DB";
 function Tasks() {
   const [input, setInput] = useState("");
   const [tasks, setTasks] = useState([]);
-  const [edit, setEdit] = useState(null);
 
 
   // Load tasks from IndexedDB on component mount
