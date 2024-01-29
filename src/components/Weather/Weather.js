@@ -4,6 +4,7 @@ import Forecast from "./Forecast";
 import React, { useState, useEffect } from "react";
 import { WEATHER_API_KEY, WEATHER_API_URL } from "./api";
 import { IndexDBHandler } from "../DB";
+import { ForecastLogic } from "./ForecastLogic";
 
 function Weather({ searchData }) {
   const [currentWeather, setCurrentWeather] = useState(null);
@@ -16,7 +17,6 @@ function Weather({ searchData }) {
   // IndexedDB functions
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         // Handling of DB loading
@@ -24,7 +24,7 @@ function Weather({ searchData }) {
         const searchDataArr = await IndexDBHandler.getWeather(db, "weather");
         if (!searchDataArr || searchDataArr.length === 0)
           console.log("No weather data found in IndexedDB");
-        else if(!searchData) searchData = searchDataArr[0];
+        else if (!searchData) searchData = searchDataArr[0];
 
         //Handling of text
         if (searchData && searchData.value) {
@@ -49,11 +49,7 @@ function Weather({ searchData }) {
             ...currentWeatherData,
           });
 
-          // ! Move this to other class
-          forecastData.list.forEach((forecast) => {
-            const date = forecast.dt_txt.split(" ")[0];
-            //! DO DATA MANIPULATION HERE
-          });
+          console.log(ForecastLogic.Handler(Forecast))
 
           setForecast({
             city: searchData.label,
