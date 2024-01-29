@@ -2,11 +2,12 @@ import "./css/Tasks.css";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { IndexDBHandler } from "./DB";
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Tasks() {
   const [input, setInput] = useState("");
   const [tasks, setTasks] = useState([]);
-
 
   // Load tasks from IndexedDB on component mount
   useEffect(() => {
@@ -30,14 +31,19 @@ function Tasks() {
   async function onFormSubmit(event) {
     event.preventDefault();
 
-    console.log(tasks)
-    const newTask = { id: uuidv4(), title: input, completed: false, timestamp: new Date().getTime() };
+    console.log(tasks);
+    const newTask = {
+      id: uuidv4(),
+      title: input,
+      completed: false,
+      timestamp: new Date().getTime(),
+    };
     setTasks([newTask, ...tasks]); // doesnt update before updateTasksInIndexedDB
     setInput("");
 
     // Update tasks in IndexedDB
 
-    IndexDBHandler.updateInIndexedDB([newTask, ...tasks], 'tasks');
+    IndexDBHandler.updateInIndexedDB([newTask, ...tasks], "tasks");
   }
 
   //handling changes to specific tasks
@@ -47,12 +53,12 @@ function Tasks() {
       return item;
     });
     setTasks(updatedTasks);
-    IndexDBHandler.updateInIndexedDB(updatedTasks, 'tasks');
+    IndexDBHandler.updateInIndexedDB(updatedTasks, "tasks");
   }
   async function handleDelete({ id }) {
     const updatedTasks = tasks.filter((tasks) => tasks.id !== id);
     setTasks(updatedTasks);
-    IndexDBHandler.updateInIndexedDB(updatedTasks, 'tasks');
+    IndexDBHandler.updateInIndexedDB(updatedTasks, "tasks");
   }
 
   async function handleEdit(event, id) {
@@ -64,7 +70,7 @@ function Tasks() {
     setTasks(updatedTasks);
 
     const intervalId = setInterval(() => {
-      IndexDBHandler.updateInIndexedDB(updatedTasks, 'tasks');
+      IndexDBHandler.updateInIndexedDB(updatedTasks, "tasks");
     }, 1000);
 
     // Clear the interval after 1 second
@@ -85,7 +91,7 @@ function Tasks() {
           onChange={onInputChange}
         />
         <button className="button-add" type="submit">
-          Add
+          <AddIcon/>
         </button>
       </form>
       <div>
@@ -112,7 +118,7 @@ function Tasks() {
                 handleDelete(tasks);
               }}
             >
-              x
+              <DeleteIcon/>
             </button>
           </li>
         ))}

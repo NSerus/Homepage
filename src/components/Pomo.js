@@ -1,5 +1,9 @@
 import "./css/Pomo.css";
 import React, { useState, useEffect } from "react";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import StopIcon from '@mui/icons-material/Stop';
+import PauseIcon from '@mui/icons-material/Pause';
 
 function Pomo() {
   const sessionMin = 25;
@@ -87,16 +91,16 @@ function Pomo() {
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </p>
       <button onClick={startTimer} disabled={isActive}>
-        <span class="material-symbols-outlined">play_arrow</span>
+        <PlayArrowIcon/>
       </button>
       <button onClick={skip}>
-        <span class="material-symbols-outlined">skip_next</span>
+        <SkipNextIcon/>
       </button>
       <button onClick={pauseTimer} disabled={!isActive}>
-        <span class="material-symbols-outlined fill">pause</span>
+        <PauseIcon/>
       </button>
       <button onClick={resetTimer}>
-        <span class="material-symbols-outlined">restart_alt</span>
+        <StopIcon/>
       </button>
     </div>
   );
