@@ -1,10 +1,61 @@
+
+
+button {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  transition: ease-out 200ms;
+}
+
+button:hover {
+	background: none;
+	color: rgb(151, 151, 151);
+
+  font-size:30px;  /* Preferred icon size */
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+button:disabled,
+button[disabled]{
+  background: none;
+	color: rgb(151, 151, 151);
+
+  font-size:30px;  /* Preferred icon size */
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+
 .pomo {
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px; /* Adjust the width as needed */
-  padding: 10px; /* Optional: Add padding to your component */
-  text-align: center; /* Optional: Center-align the content */
+  width: 200px; 
+  padding: 10px; 
+  text-align: center; 
   color: white;
 }
+.time{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  font-size: 70px;
+  font-weight: 400;
+  width: auto;
+  margin: 0;
+}
+
+

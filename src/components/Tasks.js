@@ -2,11 +2,14 @@ import "./css/Tasks.css";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { IndexDBHandler } from "./DB";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 function Tasks() {
   const [input, setInput] = useState("");
   const [tasks, setTasks] = useState([]);
-
 
   // Load tasks from IndexedDB on component mount
   useEffect(() => {
@@ -30,29 +33,34 @@ function Tasks() {
   async function onFormSubmit(event) {
     event.preventDefault();
 
-    console.log(tasks)
-    const newTask = { id: uuidv4(), title: input, completed: false, timestamp: new Date().getTime() };
+    console.log(tasks);
+    const newTask = {
+      id: uuidv4(),
+      title: input,
+      completed: false,
+      timestamp: new Date().getTime(),
+    };
     setTasks([newTask, ...tasks]); // doesnt update before updateTasksInIndexedDB
     setInput("");
 
     // Update tasks in IndexedDB
 
-    IndexDBHandler.updateInIndexedDB([newTask, ...tasks], 'tasks');
+    IndexDBHandler.updateInIndexedDB([newTask, ...tasks], "tasks");
   }
 
   //handling changes to specific tasks
   async function handleComplete({ id }) {
     const updatedTasks = tasks.map((item) => {
-      if (item.id === id) return { ...item /*  */, completed: !item.completed };
+      if (item.id === id) return { ...item, completed: !item.completed };
       return item;
     });
     setTasks(updatedTasks);
-    IndexDBHandler.updateInIndexedDB(updatedTasks, 'tasks');
+    IndexDBHandler.updateInIndexedDB(updatedTasks, "tasks");
   }
   async function handleDelete({ id }) {
     const updatedTasks = tasks.filter((tasks) => tasks.id !== id);
     setTasks(updatedTasks);
-    IndexDBHandler.updateInIndexedDB(updatedTasks, 'tasks');
+    IndexDBHandler.updateInIndexedDB(updatedTasks, "tasks");
   }
 
   async function handleEdit(event, id) {
@@ -64,7 +72,7 @@ function Tasks() {
     setTasks(updatedTasks);
 
     const intervalId = setInterval(() => {
-      IndexDBHandler.updateInIndexedDB(updatedTasks, 'tasks');
+      IndexDBHandler.updateInIndexedDB(updatedTasks, "tasks");
     }, 1000);
 
     // Clear the interval after 1 second
@@ -74,45 +82,48 @@ function Tasks() {
   }
 
   return (
-    <div className="tasks">
-      <form onSubmit={onFormSubmit}>
+    <div class="tasks">
+      <form onSubmit={onFormSubmit} class="input">
         <input
           type="text"
           placeholder="Enter Task..."
-          className="task-input"
+          class="task-input"
           value={input}
           required
           onChange={onInputChange}
         />
-        <button className="button-add" type="submit">
-          Add
+        <button class="button-add" type="submit">
+          <AddIcon />
         </button>
       </form>
       <div>
-        {tasks.map((tasks) => (
-          <li className="task-list" key={tasks.id}>
+        {tasks.map((task) => (
+          <li
+            key={task.id}
+            className={`task-list ${task.completed ? "completed-task" : ""}`}
+          >
             <input
               type="text"
-              value={tasks.title}
-              className="task"
-              onChange={(event) => handleEdit(event, tasks.id)}
+              class="task-text"
+              value={task.title}
+              onChange={(event) => handleEdit(event, task.id)}
             />
             <button
-              className="button-complete"
+              class="button-complete"
               onClick={() => {
-                handleComplete(tasks);
+                handleComplete(task);
               }}
             >
-              {tasks.completed ? "0" : "1"}
+              {task.completed ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
             </button>
 
             <button
-              className="button-delete"
+              class="button-delete"
               onClick={() => {
-                handleDelete(tasks);
+                handleDelete(task);
               }}
             >
-              x
+              <DeleteIcon />
             </button>
           </li>
         ))}
