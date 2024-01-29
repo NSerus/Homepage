@@ -2,10 +2,10 @@ import "./css/Pomo.css";
 import React, { useState, useEffect } from "react";
 
 function Pomo() {
-  const sessionMin = 25
-  const sessionSec = 0
-  const breakMin = 5
-  const breakSec = 0
+  const sessionMin = 25;
+  const sessionSec = 0;
+  const breakMin = 5;
+  const breakSec = 0;
 
   const [minutes, setMinutes] = useState(sessionMin);
   const [seconds, setSeconds] = useState(sessionSec);
@@ -82,18 +82,22 @@ function Pomo() {
   }
 
   return (
-    <div className="pomo">
-      <p>
+    <div class="pomo">
+      <p class="time">
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </p>
       <button onClick={startTimer} disabled={isActive}>
-        Start
+        <span class="material-symbols-outlined">play_arrow</span>
       </button>
-      <button onClick={skip}>Skip</button>
+      <button onClick={skip}>
+        <span class="material-symbols-outlined">skip_next</span>
+      </button>
       <button onClick={pauseTimer} disabled={!isActive}>
-        Pause
+        <span class="material-symbols-outlined fill">pause</span>
       </button>
-      <button onClick={resetTimer}>Reset</button>
+      <button onClick={resetTimer}>
+        <span class="material-symbols-outlined">restart_alt</span>
+      </button>
     </div>
   );
 }
