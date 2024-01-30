@@ -1,20 +1,22 @@
 import "./css/Pomo.css";
 import React, { useState, useEffect } from "react";
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
-import StopIcon from '@mui/icons-material/Stop';
-import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import StopIcon from "@mui/icons-material/Stop";
+import PauseIcon from "@mui/icons-material/Pause";
 
-function Pomo() {
-  const sessionMin = 25;
+function Pomo({ pomoData }) {
   const sessionSec = 0;
-  const breakMin = 5;
   const breakSec = 0;
 
-  const [minutes, setMinutes] = useState(sessionMin);
+  const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(sessionSec);
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
+  useEffect(() => {
+    if (!isActive && !isBreak && seconds==0) setMinutes(pomoData.pomo);
+    else if (!isActive && isBreak&& seconds==0) setMinutes(pomoData.breakTime);
+  }, [pomoData.pomo, pomoData.breakTime]);
 
   useEffect(() => {
     let timer;
@@ -28,12 +30,12 @@ function Pomo() {
             setIsActive(false);
             if (!isBreak) {
               alert("Pomodoro session completed!");
-              setMinutes(breakMin);
+              setMinutes(pomoData.breakTime);
               setSeconds(breakSec);
               setIsBreak(true);
             } else {
               alert("Break completed!");
-              setMinutes(sessionMin);
+              setMinutes(pomoData.pomo);
               setSeconds(sessionSec);
               setIsBreak(false);
             }
@@ -64,10 +66,10 @@ function Pomo() {
   function resetTimer() {
     setIsActive(false);
     if (isBreak) {
-      setMinutes(breakMin);
+      setMinutes(pomoData.breakTime);
       setSeconds(breakSec);
     } else {
-      setMinutes(sessionMin);
+      setMinutes(pomoData.pomo);
       setSeconds(sessionSec);
     }
   }
@@ -76,31 +78,31 @@ function Pomo() {
     setIsActive(false);
     if (isBreak) {
       setIsBreak(false);
-      setMinutes(sessionMin);
+      setMinutes(pomoData.pomo);
       setSeconds(sessionSec);
     } else {
       setIsBreak(true);
-      setMinutes(breakMin);
+      setMinutes(pomoData.breakTime);
       setSeconds(breakSec);
     }
   }
 
   return (
-    <div class="pomo">
-      <p class="time">
+    <div className="pomo">
+      <p className="time">
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </p>
       <button onClick={startTimer} disabled={isActive}>
-        <PlayArrowIcon/>
+        <PlayArrowIcon />
       </button>
       <button onClick={skip}>
-        <SkipNextIcon/>
+        <SkipNextIcon />
       </button>
       <button onClick={pauseTimer} disabled={!isActive}>
-        <PauseIcon/>
+        <PauseIcon />
       </button>
       <button onClick={resetTimer}>
-        <StopIcon/>
+        <StopIcon />
       </button>
     </div>
   );

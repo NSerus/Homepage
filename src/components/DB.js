@@ -66,7 +66,6 @@ export class IndexDBHandler {
       const request = store.getAll();
     
       request.onsuccess = () => {
-        console.log(request.result)
         resolve(request.result || []);
       };
 
@@ -97,7 +96,6 @@ export class IndexDBHandler {
         await Promise.all(
           newData.map((task) => {
             return new Promise((resolve, reject) => {
-              console.log(task);
               const addRequest = store.add(task);
               addRequest.onsuccess = () => resolve();
               addRequest.onerror = () => reject(addRequest.error);

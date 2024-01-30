@@ -2,7 +2,7 @@ export class ForecastLogic {
 
 
     
-    static async Handler(Forecast) {
+    static async Handler(forecastData) {
 
         // ! Move this to other class
         let logDate;
@@ -18,7 +18,7 @@ export class ForecastLogic {
         };
         let forecastResolvedData = [];
         let forecastDescs = new Map();
-
+        if(forecastData!=null) {
         forecastData.list.forEach((forecast) => {
           const date = forecast.dt_txt.split(" ")[0];
           if (date == logDate) {
@@ -32,18 +32,16 @@ export class ForecastLogic {
             else forecastDescs[forecast.description] = 1;
             console.log(forecastDayData)
           } else {
-            forecastDayData.description = Object.keys(forecastDescs).reduce(
-              (a, b) => Math.max(a, forecastDescs(b), -Infinity)
-            );
             forecastResolvedData.push(forecastDayData);
             logDate = date;
             forecastDescs = new Map();
           }
+        
 
           console.log(forecast);
           //! DO DATA MANIPULATION HERE
-        });
+        });}
 
         return 'ok'
-    }
+    } 
 }

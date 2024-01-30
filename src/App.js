@@ -9,21 +9,29 @@ import { useState } from "react";
 function App() {
 
   const [data,setData] = useState('');
+  const [pomo,setPomo] = useState(0);
+  const [breakTime,setBreak] = useState(0);
  function handleOnSettingsChange(searchData) {
   setData(searchData)
+  
+ }
+ function handleOnPomoChange(pomoInput,breakInput) {
+  setPomo(pomoInput)
+  setBreak(breakInput)
+  
  }
 
 
   return (
     <div>
       <Clock />
-      <Settings onSettingsChange={handleOnSettingsChange}/>
+      <Settings onSettingsChange={handleOnSettingsChange} onPomoChange={handleOnPomoChange}/>
 
       <div className="apps">
         <Tasks />
         <Weather searchData={data} />
       </div>
-      <Pomo />
+      <Pomo pomoData={{pomo, breakTime}}/>
     </div>
   );
 }

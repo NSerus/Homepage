@@ -31,7 +31,6 @@ function Weather({ searchData }) {
           IndexDBHandler.updateInIndexedDB(searchData, "weather");
           // doesn't get data if no data to search
           const [lat, lon] = searchData.value.split(" ");
-          console.log(lat);
           const [currentWeatherResponse, forecastResponse] = await Promise.all([
             fetch(
               `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
@@ -48,8 +47,8 @@ function Weather({ searchData }) {
             city: searchData.label,
             ...currentWeatherData,
           });
-
-          console.log(ForecastLogic.Handler(Forecast))
+          console.log(forecastData)
+          console.log(ForecastLogic.Handler(forecastData))
 
           setForecast({
             city: searchData.label,

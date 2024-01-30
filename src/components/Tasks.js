@@ -32,8 +32,6 @@ function Tasks() {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-
-    console.log(tasks);
     const newTask = {
       id: uuidv4(),
       title: input,
@@ -82,17 +80,17 @@ function Tasks() {
   }
 
   return (
-    <div class="tasks">
-      <form onSubmit={onFormSubmit} class="input">
+    <div className="tasks">
+      <form onSubmit={onFormSubmit} className="input">
         <input
           type="text"
           placeholder="Enter Task..."
-          class="task-input"
+          className="task-input"
           value={input}
           required
           onChange={onInputChange}
         />
-        <button class="button-add" type="submit">
+        <button className="button-add" type="submit">
           <AddIcon />
         </button>
       </form>
@@ -104,12 +102,12 @@ function Tasks() {
           >
             <input
               type="text"
-              class="task-text"
+              className="task-text"
               value={task.title}
               onChange={(event) => handleEdit(event, task.id)}
             />
             <button
-              class="button-complete"
+              className="button-complete"
               onClick={() => {
                 handleComplete(task);
               }}
@@ -118,7 +116,7 @@ function Tasks() {
             </button>
 
             <button
-              class="button-delete"
+              className="button-delete"
               onClick={() => {
                 handleDelete(task);
               }}
