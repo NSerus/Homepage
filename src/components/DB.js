@@ -22,6 +22,11 @@ export class IndexDBHandler {
             keyPath: "label",
           });
         }
+        if (!db.objectStoreNames.contains("pomo")) {
+          const objectStore = db.createObjectStore("pomo", {
+            keyPath: "break",
+          });
+        }
       };
 
       request.onsuccess = () => {
@@ -81,6 +86,8 @@ export class IndexDBHandler {
       const transaction = db.transaction(storeName, "readwrite");
       const store = transaction.objectStore(storeName);
 
+      console.log(newData)
+
       // Clear existing data
       const clearPromise = new Promise((resolve, reject) => {
         const clearRequest = store.clear();
@@ -104,11 +111,8 @@ export class IndexDBHandler {
         );
       } else if (
         typeof newData === "object" &&
-        newData !== null &&
-        newData.hasOwnProperty("value") &&
-        newData.hasOwnProperty("label")
+        newData !== null
       ) {
-        // Handle object with properties like 'value' and 'label'
 
         try {
           const addRequest = store.add(newData);

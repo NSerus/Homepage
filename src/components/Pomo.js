@@ -4,6 +4,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import StopIcon from "@mui/icons-material/Stop";
 import PauseIcon from "@mui/icons-material/Pause";
+import { IndexDBHandler } from "./DB";
 
 function Pomo({ pomoData }) {
   const sessionSec = 0;
@@ -14,9 +15,10 @@ function Pomo({ pomoData }) {
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
   useEffect(() => {
-    if (!isActive && !isBreak && seconds==0) setMinutes(pomoData.pomo);
-    else if (!isActive && isBreak&& seconds==0) setMinutes(pomoData.breakTime);
-  }, [pomoData.pomo, pomoData.breakTime]);
+    console.log(pomoData)
+    if (!isActive && !isBreak && seconds==0) setMinutes(pomoData.pomo.pomo);
+    else if (!isActive && isBreak&& seconds==0) setMinutes(pomoData.pomo.break);
+  }, [pomoData.pomo.pomo, pomoData.pomo.break]);
 
   useEffect(() => {
     let timer;
@@ -30,12 +32,12 @@ function Pomo({ pomoData }) {
             setIsActive(false);
             if (!isBreak) {
               alert("Pomodoro session completed!");
-              setMinutes(pomoData.breakTime);
+              setMinutes(pomoData.pomo.break);
               setSeconds(breakSec);
               setIsBreak(true);
             } else {
               alert("Break completed!");
-              setMinutes(pomoData.pomo);
+              setMinutes(pomoData.pomo.pomo);
               setSeconds(sessionSec);
               setIsBreak(false);
             }
@@ -66,10 +68,10 @@ function Pomo({ pomoData }) {
   function resetTimer() {
     setIsActive(false);
     if (isBreak) {
-      setMinutes(pomoData.breakTime);
+      setMinutes(pomoData.pomo.break);
       setSeconds(breakSec);
     } else {
-      setMinutes(pomoData.pomo);
+      setMinutes(pomoData.pomo.pomo);
       setSeconds(sessionSec);
     }
   }
@@ -78,11 +80,11 @@ function Pomo({ pomoData }) {
     setIsActive(false);
     if (isBreak) {
       setIsBreak(false);
-      setMinutes(pomoData.pomo);
+      setMinutes(pomoData.pomo.pomo);
       setSeconds(sessionSec);
     } else {
       setIsBreak(true);
-      setMinutes(pomoData.breakTime);
+      setMinutes(pomoData.pomo.break);
       setSeconds(breakSec);
     }
   }
