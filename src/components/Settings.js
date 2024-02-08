@@ -80,13 +80,22 @@ function Settings({ onSettingsChange, onPomoChange }) {
 
   function onPomoInputChange(event) {
     const inputValue = parseInt(event.target.value, 10);
-    setPomoInput((prevState) => ({ ...prevState, pomo: inputValue }));
-    console.log(pomoInput);
-    IndexDBHandler.updateInIndexedDB(pomoInput, "pomo");
-    onPomoChange(pomoInput);
+    setPomoInput((prevState) => {
+      const updatedState = { ...prevState, pomo: inputValue };
+      IndexDBHandler.updateInIndexedDB(updatedState, "pomo");
+      onPomoChange(updatedState);
+      return updatedState;
+    });
   }
   function onBreakInputChange(event) {
     const inputValue = parseInt(event.target.value, 10);
+
+    setPomoInput((prevState) => {
+      const updatedState = { ...prevState, break: inputValue };
+      IndexDBHandler.updateInIndexedDB(updatedState, "pomo");
+      onPomoChange(updatedState);
+      return updatedState;
+    });
     setPomoInput((prevState) => ({ pomo: pomoInput.pomo, break: inputValue }));
     IndexDBHandler.updateInIndexedDB(pomoInput, "pomo");
     onPomoChange(pomoInput);
