@@ -35,17 +35,21 @@ function Settings({ onSettingsChange, onPomoChange }) {
     const fetchData = async () => {
       try {
         const db = await IndexDBHandler.openDB();
-        const pomoDataArr = await IndexDBHandler.getWeather(db, "pomo");
+        const pomoDataArr = await IndexDBHandler.getLabel(db, "pomo");
         if (!pomoDataArr || pomoDataArr.length === 0)
           console.log("No pomo data found in IndexedDB");
-        else setPomoInput(pomoDataArr[0]);
-        console.log('pomoData',pomoDataArr);
+        else {
+          setPomoInput(pomoDataArr[0]);
+          onPomoChange(pomoDataArr[0]);
+        }
+        console.log("pomoData", pomoDataArr);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
+
     const handleBodyClick = (e) => {
       if (
         openSettings &&
@@ -83,7 +87,6 @@ function Settings({ onSettingsChange, onPomoChange }) {
     setPomoInput((prevState) => {
       const updatedState = { ...prevState, pomo: inputValue };
       IndexDBHandler.updateInIndexedDB(updatedState, "pomo");
-      onPomoChange(updatedState);
       return updatedState;
     });
   }
@@ -93,14 +96,13 @@ function Settings({ onSettingsChange, onPomoChange }) {
     setPomoInput((prevState) => {
       const updatedState = { ...prevState, break: inputValue };
       IndexDBHandler.updateInIndexedDB(updatedState, "pomo");
-      onPomoChange(updatedState);
       return updatedState;
     });
-    setPomoInput((prevState) => ({ pomo: pomoInput.pomo, break: inputValue }));
-    IndexDBHandler.updateInIndexedDB(pomoInput, "pomo");
-    onPomoChange(pomoInput);
   }
-
+  useEffect(() => {
+    // This effect will run after the component renders
+    onPomoChange(pomoInput); // You can use pomoInput directly here
+  }, [pomoInput]); // Add pomoInput to the dependency array
   return (
     <div className="settings">
       {openSettings && (

@@ -14,13 +14,13 @@ function Pomo({ pomoData }) {
   const [seconds, setSeconds] = useState(sessionSec);
   const [isActive, setIsActive] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
-  useEffect(() => {
-    console.log(pomoData)
-    if (!isActive && !isBreak && seconds==0) setMinutes(pomoData.pomo.pomo);
-    else if (!isActive && isBreak&& seconds==0) setMinutes(pomoData.pomo.break);
-  }, [pomoData.pomo.pomo, pomoData.pomo.break]);
 
-  useEffect(() => {
+   useEffect(() => {
+    if (!isActive && !isBreak && seconds==0) setMinutes(pomoData?.pomo.pomo);
+    else if (!isActive && isBreak&& seconds==0) setMinutes(pomoData.pomo.break);
+  }, [pomoData.pomo.pomo, pomoData.pomo.break]); 
+
+   useEffect(() => {
     let timer;
 
     if (isActive) {
@@ -55,7 +55,7 @@ function Pomo({ pomoData }) {
 
     // Cleanup function to clear the interval when the component is unmounted or when isActive becomes false
     return () => clearInterval(timer);
-  }, [isActive, minutes, seconds]);
+  }, [isActive, minutes, seconds]); 
 
   function startTimer() {
     setIsActive(true);

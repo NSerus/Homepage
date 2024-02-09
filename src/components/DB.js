@@ -64,7 +64,7 @@ export class IndexDBHandler {
       };
     });
   }
-  static async getWeather(db, storeName) {
+  static async getLabel(db, storeName) {
     return new Promise((resolve, reject) => {
       const transaction = db.transaction(storeName, "readonly");
       const store = transaction.objectStore(storeName);
@@ -86,7 +86,6 @@ export class IndexDBHandler {
       const transaction = db.transaction(storeName, "readwrite");
       const store = transaction.objectStore(storeName);
 
-      console.log(newData)
 
       // Clear existing data
       const clearPromise = new Promise((resolve, reject) => {

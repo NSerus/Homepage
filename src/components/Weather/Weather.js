@@ -21,7 +21,7 @@ function Weather({ searchData }) {
       try {
         // Handling of DB loading
         const db = await IndexDBHandler.openDB();
-        const searchDataArr = await IndexDBHandler.getWeather(db, "weather");
+        const searchDataArr = await IndexDBHandler.getLabel(db, "weather");
         if (!searchDataArr || searchDataArr.length === 0)
           console.log("No weather data found in IndexedDB");
         else if (!searchData) searchData = searchDataArr[0];
@@ -47,8 +47,8 @@ function Weather({ searchData }) {
             city: searchData.label,
             ...currentWeatherData,
           });
-          console.log(forecastData)
-          console.log(ForecastLogic.Handler(forecastData))
+          /* console.log(forecastData)
+          console.log(ForecastLogic.Handler(forecastData)) */
 
           setForecast({
             city: searchData.label,
