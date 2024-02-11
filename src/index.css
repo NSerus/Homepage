@@ -3,7 +3,7 @@ body {
   font-family: 'Roboto', Arial !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('./components/anime-eye-nord.png');
+  background-image: url('./components/image.png');
   background-size: cover; /* or other values like 'contain' */
   background-position: center; /* or other values like 'top left', 'bottom right', etc. */
   background-repeat: no-repeat; /* or other values like 'repeat', 'repeat-x', 'repeat-y' */
