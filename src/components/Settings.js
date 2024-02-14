@@ -42,7 +42,6 @@ function Settings({ onSettingsChange, onPomoChange }) {
           setPomoInput(pomoDataArr[0]);
           onPomoChange(pomoDataArr[0]);
         }
-        console.log("pomoData", pomoDataArr);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -24,27 +24,27 @@ function Forecast({ data }) {
     //slice extracts portion of this tomorrow till end of week
     WEEK_DAYS.slice(0, dayInAWeek) // concat adds the rest of the days until this day next week
   );
-
+console.log('data',data)
   return (
     <>
       <Accordion allowZeroExpanded>
         {/* 'allowZeroExpanded' allows accordion to close */}
-        {data.list.slice(0, 7).map((item, idx) => (
+        {data.map((item, idx) => (
           <AccordionItem key={idx}>
             <AccordionItemHeading>
               <AccordionItemButton>
                 <div className="daily-item">
-                  <img
+                  {/* <img
                     src={require(`./icons/${item.weather[0].icon}.png`)}
                     className="icon-small"
                     alt="weather"
-                  />
+                  /> */}
                   <label className="day"> {forecastDays[idx]}</label>
                   <label className="description">
-                    {item.weather[0].description}
+                    {item.description}
                   </label>
                   <label className="max">
-                  🌡️ {Math.round(item.main.temp_max)}ºC / 💧 {item.pop}%
+                  🌡️ {item.temp_max}ºC / 💧 {item.pop}%
                   </label>
                 </div>
               </AccordionItemButton>
@@ -53,25 +53,25 @@ function Forecast({ data }) {
             <div className="daily-details-grid">
                 <div className="daily-details-grid-item">
                   <label>Feels Like</label>
-                  <label>{item.main.feels_like} ºC</label>
+                  <label>{item.feels_like} ºC</label>
                 </div>
               </div>
               <div className="daily-details-grid">
                 <div className="daily-details-grid-item">
                   <label>Humidity</label>
-                  <label>{item.main.humidity}%</label>
+                  <label>{item.humidity}%</label>
                 </div>
               </div>
               <div className="daily-details-grid">
                 <div className="daily-details-grid-item">
                   <label>Clouds</label>
-                  <label>{item.clouds.all}%</label>
+                  <label>{item.clouds}%</label>
                 </div>
               </div>
               <div className="daily-details-grid">
                 <div className="daily-details-grid-item">
                   <label>Wind Speed</label>
-                  <label>{item.wind.speed} m/s</label>
+                  <label>{item.windspeed} m/s</label>
                 </div>
               </div>
             </AccordionItemPanel>

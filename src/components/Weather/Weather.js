@@ -47,12 +47,11 @@ function Weather({ searchData }) {
             city: searchData.label,
             ...currentWeatherData,
           });
-          /* console.log(forecastData)
-          console.log(ForecastLogic.Handler(forecastData)) */
+          const forecastHandledData = await ForecastLogic.Handler(forecastData)
 
           setForecast({
             city: searchData.label,
-            ...forecastData,
+            ...forecastHandledData,
           });
         }
       } catch (error) {
