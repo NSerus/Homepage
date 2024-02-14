@@ -50,8 +50,7 @@ function Weather({ searchData }) {
           const forecastHandledData = await ForecastLogic.Handler(forecastData)
 
           setForecast({
-            city: searchData.label,
-            ...forecastHandledData,
+            list: forecastHandledData,
           });
         }
       } catch (error) {

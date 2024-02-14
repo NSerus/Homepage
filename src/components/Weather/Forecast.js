@@ -29,7 +29,7 @@ console.log('data',data)
     <>
       <Accordion allowZeroExpanded>
         {/* 'allowZeroExpanded' allows accordion to close */}
-        {data.map((item, idx) => (
+        {data.list.slice(0, 3).map((item, idx) => (
           <AccordionItem key={idx}>
             <AccordionItemHeading>
               <AccordionItemButton>
@@ -44,7 +44,7 @@ console.log('data',data)
                     {item.description}
                   </label>
                   <label className="max">
-                  🌡️ {item.temp_max}ºC / 💧 {item.pop}%
+                  🌡️ {item.temp_max}ºC / 💧 {item.humidity}%
                   </label>
                 </div>
               </AccordionItemButton>
