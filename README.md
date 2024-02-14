@@ -28,7 +28,8 @@ export const geoApiOptions = {
 };
 ```
 
-You may also want to text the website, you can also do that here:
+You may also want to test the website, you can also do that here:
 
+https://nserus.github.io/Homepage/
 
 
